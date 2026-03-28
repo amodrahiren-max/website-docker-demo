@@ -8,7 +8,7 @@ pipeline {
         IMAGE_TAG = "${env.BUILD_NUMBER}"  
         IMAGE_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"  
         LATEST_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:latest"  
-        DEPLOY_SERVER = '13.234.226.189'  
+        DEPLOY_SERVER = '43.205.140.86'  
     }  
   
     stages {  
@@ -54,7 +54,7 @@ pipeline {
             steps {  
                 sshagent(['deploy-ec2-key']) {  
                     sh '''  
-                        ssh -o StrictHostKeyChecking=no ec2-user@$DEPLOY_SERVER "  
+                        ssh -o StrictHostKeyChecking=no ubuntu@$DEPLOY_SERVER "  
                         aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com &&  
                         docker pull $LATEST_URI &&  
                         docker stop website-demo || true &&  

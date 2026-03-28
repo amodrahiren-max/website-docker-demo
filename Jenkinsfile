@@ -8,7 +8,7 @@ pipeline {
         IMAGE_TAG = "${env.BUILD_NUMBER}"  
         IMAGE_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"  
         LATEST_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:latest"  
-        DEPLOY_SERVER = 'YOUR_DEPLOYMENT_EC2_PUBLIC_IP'  
+        DEPLOY_SERVER = '13.234.226.189'  
     }  
   
     stages {  
@@ -36,9 +36,7 @@ pipeline {
         stage('Login to ECR') {  
             steps {  
                 sh '''  
-                    aws ecr get-login-password --region $AWS_REGION | \  
-                    docker login --username AWS --password-stdin \  
-                    $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com  
+                    aws ecr get-login-password --region $AWS_REGION |  docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com  
                 '''  
             }  
         }  
